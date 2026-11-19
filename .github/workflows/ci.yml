@@ -1,3 +1,9 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 2 optimizations:
+# - [HIGH] Add pip dependency cache to "flake8" job
+# - [MEDIUM] Add concurrency group to "ci.yml"
+# Estimated savings: ~5 min/run
+#
 name: CI
 
 env:
@@ -49,6 +55,10 @@ on:
         required: true
         default: both
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 
