@@ -152,6 +152,13 @@ jobs:
         sudo apt-get update
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
     #-------- Python 3 -----
     - name: Set up supported Python ${{ matrix.python-version }}
       id: setup-python
@@ -479,4 +486,3 @@ jobs:
       run: pip install flake8
     - name: Run flake8
       run: flake8 .
-
